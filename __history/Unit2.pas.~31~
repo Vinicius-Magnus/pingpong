@@ -1,0 +1,57 @@
+unit Unit2;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.pngimage,
+  Vcl.Imaging.jpeg;
+
+type
+  TForm2 = class(TForm)
+    Timer1: TTimer;
+    ball: TImage;
+    barraesquerda: TPanel;
+    barradireita: TPanel;
+    procedure Timer1Timer(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+  esquerda, cima: Boolean;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm2.Timer1Timer(Sender: TObject);
+begin
+if esquerda then ball.left := ball.left + 5
+else ball.left := ball.left - 5;
+
+if cima then ball.top := ball.top - 5
+Else ball.top := ball.top + 5;
+
+if ball.top < 0 then
+cima := not cima;
+
+if (ball.top + ball.height) >= clientheight then
+cima := not cima;
+
+if (ball.left < 0) or (ball.left + ball.width > clientwidth) then
+esquerda := not esquerda;
+
+//
+
+if (ball.left > (barradireita.left-(clientwidth-barradireita.left))) then
+esquerda := not esquerda;
+
+if (ball.left =< barraesquerda.left) then
+esquerda := not esquerda;
+end;
+
+end.
